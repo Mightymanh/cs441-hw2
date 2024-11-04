@@ -49,7 +49,8 @@ Then clean and assembly to a new jar file.
 
 ## Statistics File
 - Training a model in Spark involves looking at statistics: Training Loss and Accuracy, Learning Rates, Memory Usage, Time per Epoch/Iteration, and Spark-specific metrics.
-- File of training first two paragraphs of a Sherlock Holmes novel will be at: **stats.txt**
+- File of training first two paragraphs of a Sherlock Holmes novel will be at: src/main/resources/input/data.txt
+- Stat file after training are written in **stats.txt** in root folder
 
 ## Additional commands
 `sbt clean`: clean project
