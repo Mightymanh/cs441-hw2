@@ -3,7 +3,7 @@ Author: Manh Phan
 
 Email: dphan8@uic.edu
 
-Youtube demo Deploying app in AWS:
+Youtube demo Deploying app in AWS: [https://youtu.be/aiObXevvZH4?si=PpA8manb7ce6YwLQ](https://youtu.be/aiObXevvZH4?si=PpA8manb7ce6YwLQ)
 
 # Instruction on running this homework
 Open this project at your favorite IDEA, my ideal IDEA is IntelliJ. But a terminal is also fine to run this homework.
