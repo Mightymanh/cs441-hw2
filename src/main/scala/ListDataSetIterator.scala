@@ -3,6 +3,12 @@ import org.nd4j.linalg.dataset.api.DataSetPreProcessor
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator
 import java.util
 
+
+// Note: I have to use var for "cur" in here because of the nature of iterator.next(): iterator needs to keep track
+// of its current position in the list of Datasets
+
+// Note: I have to use var for "preProcessor" because the interface DataSetIterator requires overriding function
+// setPreprocessor which is used to set preProcessor
 class ListDataSetIterator[T <: DataSet](coll: List[T], batch: Int) extends DataSetIterator {
   private var curr = 0
   private val list = coll

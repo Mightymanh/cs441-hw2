@@ -42,10 +42,6 @@ object SparkLLMTraining {
   def createSparkContext(): JavaSparkContext = {
     val sparkConf: SparkConf = new SparkConf()
       .setAppName("Spark LLM Training")
-
-//      .set("spark.executor.memoryOverhead", "4g")
-//      .set("spark.kryo.registrator", "org.nd4j.kryo.Nd4jRegistrator")
-
     val sc: JavaSparkContext = new JavaSparkContext(sparkConf)
     sc
   }
@@ -59,27 +55,14 @@ object SparkLLMTraining {
     val conf: MultiLayerConfiguration = new NeuralNetConfiguration.Builder()
       .seed(seed)
       .l2(1e-4)
-      //      .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
       .updater(new Adam(learningRate))
       .list()
-      //      .inputPreProcessor(0, new FeedForwardToRnnPreProcessor())
-      //      .inputPreProcessor(1, new RnnToFeedForwardPreProcessor())
-      //      .layer(0, new SelfAttentionLayer.Builder()
-      //        .nIn(embeddingSize)
-      //        .nOut(embeddingSize)
-      //        .nHeads(1)
-      //        .weightInit(WeightInit.XAVIER)
-      //        .dropOut(0.1)
-      //        .build())
       .layer(0, new DenseLayer.Builder()
         .weightInit(WeightInit.XAVIER)
         .activation(Activation.RELU)
         .nIn(embeddingSize * windowSize)
         .nOut(3000)
         .build())
-      //      .layer(2, new ActivationLayer.Builder()
-      //        .activation(Activation.SOFTMAX)
-      //        .build())
       .layer(1, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
         .weightInit(WeightInit.XAVIER)
         .activation(Activation.SOFTMAX)
@@ -87,7 +70,6 @@ object SparkLLMTraining {
         .nOut(vocabSize)
         .build())
       .build()
-    //    println(conf.toJson)
     val model: MultiLayerNetwork = new MultiLayerNetwork(conf)
     model
   }
@@ -97,10 +79,8 @@ object SparkLLMTraining {
     val context = TokenHelper.getContext(tokens, windowSize)
     val inputEmbedding = TokenHelper.tokensToEmbeddingPosition(context, embeddingMatrix, positionalEmbedding).reshape(1, embeddingMatrix.size(1) * windowSize)
     val output = model.output(inputEmbedding)
-    val lastRow = output //output.getRow(context.length - 1, true)
-    val outputToken = Nd4j.argMax(lastRow, 1).getInt(0)
+    val outputToken = Nd4j.argMax(output, 1).getInt(0)
     val word = TokenHelper.tokenToWord(outputToken, enc)
-    //    println(s"next word: ${word}")
     word
   }
 
@@ -117,26 +97,25 @@ object SparkLLMTraining {
   def main(args: Array[String]): Unit = {
 
     if (args.length != 2) {
-      logger.error("need inputpath and outputpath")
+      logger.error("need inputPath and outputPath")
       return
     }
     val inputPath = args(0)
     val outputPath = args(1)
 
+    // initialize spark context
     logger.info("initialize spark context")
     val sc: JavaSparkContext = createSparkContext()
+
     // create embedding matrix
     val embeddingMatrix = TokenHelper.createEmbeddingMatrix(vocabSize, embeddingSize)
-//    println(s"embeddingMatrix shape: ${embeddingMatrix.shape()}")
 
     // create positional embedding
     val positionalEmbedding = TokenHelper.createPositionalEmbedding(embeddingSize)
 
     // prepare data
-    // read file and encode it
-//    val data = DataSetHelper.readFile(inputFile)
     logger.info("Prepare training data")
-    val data = DataSetHelper.readFileFS(args(0))
+    val data = DataSetHelper.readFileFS(inputPath)
     val encoded = enc.encode(data).toArray.toList
     logger.info(s"encoded ${encoded.length}")
 
@@ -146,7 +125,7 @@ object SparkLLMTraining {
     val dataSetIterator = new ListDataSetIterator[DataSet](dataset, batchSize)
     val rddData = createRDDFromData(dataset, sc)
 
-    // model
+    // create LLM model
     logger.info("initialize model")
     val model: MultiLayerNetwork = createModel()
     model.init()
@@ -157,9 +136,10 @@ object SparkLLMTraining {
       .workerPrefetchNumBatches(2)
       .build()
 
+    // wrap the model with spark context and training master
     val sparkModel: SparkDl4jMultiLayer = new SparkDl4jMultiLayer(sc, model, trainingMaster)
 
-    // Set listeners to monitor the training progress
+    // Set listeners to monitor the training progress: loss score, evaluation score
     model.setListeners(new ScoreIterationListener(10), new EvaluativeListener(dataSetIterator, 10, InvocationType.EPOCH_END))
 
     // train the model on distributed RDD dataset
@@ -170,23 +150,26 @@ object SparkLLMTraining {
       sparkModel.fit(rddData)
       val endTime = System.currentTimeMillis
       val t = (endTime - startTime) / 1000.0
-      logger.info(s"Epoch $i execute $t seconds")
-      println("Current Learning Rate: " + model.getLearningRate(0))
+      logger.info(s"Epoch $i execute $t seconds") // time per epoch
+      println("Current Learning Rate: " + model.getLearningRate(0)) // learning rate
     })
 
+    //
     logger.info("Total executors: " + sc.getExecutorMemoryStatus.size)
+
+
 
     // stop the context after training
     logger.info("Finish training. Stop the context")
     sc.stop()
 
-    // test string
+    // test the model
     val testStr = "The man starts with"
     logger.info(s"Test str ${testStr}")
     val sentence = generateSentence(testStr, 20, model, embeddingMatrix, positionalEmbedding)
     logger.info(sentence)
 
-    // write sentence to file
+    // write output sentence to file
     DataSetHelper.writeFileFS(outputPath, sentence)
   }
 }

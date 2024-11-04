@@ -1,0 +1,75 @@
+Training model with 2 paragraph of sherlock holmes novel, with 8GB main memory and 4 cores.
+
+1. Training Loss and Accuracy
+
+Loss:
+21:20:47.092 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 0 is 23.265691052022976
+21:20:49.386 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 10 is 23.2656838973309
+21:20:52.068 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 20 is 23.265674930793942
+21:20:53.959 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 30 is 23.265668536381792
+21:20:55.569 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 40 is 23.26565989358495
+21:20:57.400 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 50 is 23.265653355859218
+21:20:58.854 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 60 is 23.26564924065929
+21:21:00.584 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 70 is 23.265642092426376
+21:21:02.127 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 80 is 23.265637067923514
+...
+21:24:28.432 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 800 is 23.265456857358036
+21:24:35.929 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 810 is 23.26545508362877
+21:24:42.149 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 820 is 23.265453216536915
+21:24:47.325 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 830 is 23.26545287533181
+21:24:50.500 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 840 is 23.26544957579738
+21:24:54.425 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 850 is 23.265447802110582
+21:24:57.754 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 860 is 23.265445916396718
+21:25:05.801 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 870 is 23.265444142737902
+21:25:11.713 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 880 is 23.26544236909952
+21:25:15.809 [sbt-bg-threads-1] INFO  o.d.o.l.ScoreIterationListener - Score at iteration 890 is 22.94571917520221
+
+Evaluation
+========================Evaluation Metrics========================
+ # of classes:    2000
+ Accuracy:        0.0000
+ Precision:       0.0000	(1998 classes excluded from average)
+ Recall:          0.0000	(1742 classes excluded from average)
+ F1 Score:        NaN	(2000 classes excluded from average)
+Precision, recall & F1: macro-averaged (equally weighted avg. of 2000 classes)
+
+Warning: 1998 classes were never predicted by the model and were excluded from average precisionWarning: 1742 classes were never predicted by the model and were excluded from average recall
+
+...
+
+========================Evaluation Metrics========================
+ # of classes:    2000
+ Accuracy:        0.0000
+ Precision:       0.0000	(1997 classes excluded from average)
+ Recall:          0.0000	(1742 classes excluded from average)
+ F1 Score:        0.0000	(1999 classes excluded from average)
+Precision, recall & F1: macro-averaged (equally weighted avg. of 2000 classes)
+
+
+2. Learning Rate
+Current Learning Rate: 0.0
+...
+Current Learning Rate: 0.0
+
+
+3. Gradient Statistics
+
+
+4. Memory Usage
+8GB 
+
+5. Time per epoch
+21:21:49.619 [sbt-bg-threads-1] INFO  Transformer$ - Epoch 0 execute 63.03 seconds
+21:23:02.280 [sbt-bg-threads-1] INFO  Transformer$ - Epoch 1 execute 72.659 seconds
+21:25:19.667 [sbt-bg-threads-1] INFO  Transformer$ - Epoch 2 execute 137.376 seconds
+
+
+6. Data Shuffling and Partitioning Statistics (Spark)
+
+
+7. CPU and GPU Utilization
+4 Cores
+
+
+8. Spark-Specific Metrics
+

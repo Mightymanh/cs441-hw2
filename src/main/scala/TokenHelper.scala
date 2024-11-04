@@ -42,8 +42,8 @@ object TokenHelper {
 
   // create positional embedding
   def createPositionalEmbedding(embeddingSize: Int): INDArray = {
-//    val positionalEmbedding = Nd4j.create(List.range(0, embeddingSize).map(_.toFloat), )
-    val positionalEmbedding = Nd4j.zeros(embeddingSize)
+    val positionalEmbedding = Nd4j.create(Array.range(0, embeddingSize).map(_.toFloat), embeddingSize)
+//    val positionalEmbedding = Nd4j.zeros(embeddingSize)
     positionalEmbedding
   }
 

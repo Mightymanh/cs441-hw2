@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e90ea133-06cf-4ada-9c58-a31d267c4d16" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/Test/test.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/.output.txt.crc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/Experiment2.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/ListDataSetIterator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ListDataSetIterator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/SparkLLMTraining.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/SparkLLMTraining.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/TokenHelper.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/TokenHelper.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/Transformer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Transformer.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +132,7 @@
       <workItem from="1730139649818" duration="5833000" />
       <workItem from="1730228268381" duration="427000" />
       <workItem from="1730477416763" duration="52123000" />
-      <workItem from="1730651189987" duration="19081000" />
+      <workItem from="1730651189987" duration="24938000" />
     </task>
     <servers />
   </component>
