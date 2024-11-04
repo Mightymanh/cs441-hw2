@@ -58,6 +58,6 @@ Then clean and assembly to a new jar file.
 `sbt test`: run test. There are 5 tests in the **src/test/** directory
 
 ## About the training data
-The training data for this model are books from [https://www.gutenberg.org/](https://www.gutenberg.org/)
+I choose some Sherlock Holmes novels to train my model. The training data for this model are from [https://www.gutenberg.org/](https://www.gutenberg.org/)
 
 
